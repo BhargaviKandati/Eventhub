@@ -22,12 +22,11 @@ namespace Eventhub.Controllers
 
         // GET: api/Event
         [HttpGet]
-        [Authorize(Roles = "User,Admin")]
+        //[Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<IEnumerable<EventDto>>> GetEvents()
         {
             var events = await (from e in _context.Events
                                 join c in _context.Categories on e.CategoryId equals c.CategoryId
-                                join v in _context.Venues on e.VenueId equals v.VenueId
                                 select new EventDto
                                 {
                                     EventId = e.EventId,
@@ -36,8 +35,7 @@ namespace Eventhub.Controllers
                                     IsActive = e.IsActive,
                                     CategoryId=c.CategoryId,
                                     CategoryName = c.Name,
-                                    VenueName = v.Name,
-                                    VenueId=v.VenueId,
+                                    VenueName = e.VenueName,
                                     StartTime = e.StartTime,
                                     EndTime = e.EndTime,
                                     Duration = e.EndTime - e.StartTime
@@ -48,12 +46,11 @@ namespace Eventhub.Controllers
 
         // GET: api/Event/5
         [HttpGet("{id}")]
-        [Authorize(Roles = "User,Admin")]
+        //[Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<EventDto>> GetEvent(int id)
         {
             var eventItem = await (from e in _context.Events
                                    join c in _context.Categories on e.CategoryId equals c.CategoryId
-                                   join v in _context.Venues on e.VenueId equals v.VenueId
                                    where e.EventId == id
                                    select new EventDto
                                    {
@@ -62,7 +59,7 @@ namespace Eventhub.Controllers
                                        Price = e.Price,
                                        IsActive = e.IsActive,
                                        CategoryName = c.Name,
-                                       VenueName = v.Name,
+                                       VenueName = e.VenueName,
                                        StartTime = e.StartTime,
                                        EndTime = e.EndTime,
                                        Duration = e.EndTime - e.StartTime
@@ -78,7 +75,7 @@ namespace Eventhub.Controllers
 
         // POST: api/Event
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<ActionResult<Event>> CreateEvent(EventCreateUpdateDto eventDto)
         {
             if (string.IsNullOrEmpty(eventDto.Title))
@@ -101,7 +98,7 @@ namespace Eventhub.Controllers
                 Price = eventDto.Price,
                 IsActive = eventDto.IsActive,
                 CategoryId = eventDto.CategoryId,
-                VenueId = eventDto.VenueId,
+                VenueName = eventDto.VenueName,
                 StartTime = eventDto.StartTime,
                 EndTime = eventDto.EndTime
             };
@@ -114,7 +111,7 @@ namespace Eventhub.Controllers
 
         // PUT: api/Event/5
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateEvent(int id, EventCreateUpdateDto eventDto)
         {
             if (string.IsNullOrEmpty(eventDto.Title))
@@ -137,7 +134,7 @@ namespace Eventhub.Controllers
             eventItem.Price = eventDto.Price;
             eventItem.IsActive = eventDto.IsActive;
             eventItem.CategoryId = eventDto.CategoryId;
-            eventItem.VenueId = eventDto.VenueId;
+            eventItem.VenueName = eventDto.VenueName;
             eventItem.StartTime = eventDto.StartTime;
             eventItem.EndTime = eventDto.EndTime;
 
@@ -149,7 +146,7 @@ namespace Eventhub.Controllers
 
         // DELETE: api/Event/5
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteEvent(int id)
         {
             var eventItem = await _context.Events.FindAsync(id);
@@ -165,3 +162,21 @@ namespace Eventhub.Controllers
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -7,6 +7,19 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// For Cors for the frontend
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:4200")
+                   .AllowAnyMethod()
+                   .AllowAnyHeader()
+                   .AllowCredentials();
+        });
+});
+
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddDbContext<EFCoreDBContext>(options => 
@@ -64,6 +77,15 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+
+// For static data, routing and CORS
+
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseCors("AllowAllOrigins");
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

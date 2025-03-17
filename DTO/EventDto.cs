@@ -23,7 +23,6 @@ public class EventCreateUpdateDto
     public bool IsActive { get; set; }
     public int CategoryId { get; set; }
     public string CategoryName { get; set; }
-    public int VenueId { get; set; }
     public string VenueName { get; set; }
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }

@@ -13,9 +13,6 @@ namespace Eventhub.Models
         public int EventId { get; set; }
 
         [Required]
-        public int VenueId { get; set; }
-
-        [Required]
         public int UserId { get; set; }
 
         [Required] 

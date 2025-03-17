@@ -25,7 +25,7 @@ namespace Eventhub.Controllers
 
         // POST: api/Ticket
         [HttpPost]
-        [Authorize(Roles = "User,Admin")]
+        //[Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<Ticket>> PostTicket(TicketDto ticketDto)
         {
             var booking = await _context.Bookings.FindAsync(ticketDto.BookingId);
@@ -49,7 +49,7 @@ namespace Eventhub.Controllers
 
         // GET: api/Ticket
         [HttpGet]
-        [Authorize(Roles = "User,Admin")]
+        //[Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<IEnumerable<Ticket>>> GetTickets()
         {
             return await _context.Tickets.ToListAsync();
@@ -57,7 +57,7 @@ namespace Eventhub.Controllers
 
         // GET: api/Ticket/5
         [HttpGet("{id}")]
-        [Authorize(Roles = "User,Admin")]
+        //[Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<Ticket>> GetTicket(int id)
         {
             var ticket = await _context.Tickets.FindAsync(id);
@@ -72,7 +72,7 @@ namespace Eventhub.Controllers
 
         // DELETE: api/Ticket/5
         [HttpDelete("{id}")]
-        [Authorize(Roles = "User,Admin")]
+        //[Authorize(Roles = "User,Admin")]
         public async Task<IActionResult> DeleteTicket(int id)
         {
             var ticket = await _context.Tickets.FindAsync(id);
@@ -90,7 +90,7 @@ namespace Eventhub.Controllers
 
 
         // Method to generate a PDF for a given Ticket
-        private byte[] GenerateTicketPdf(Ticket ticket, Venue venue, Event @event, Booking booking)
+        private byte[] GenerateTicketPdf(Ticket ticket, String venue, Event @event, Booking booking)
         {
             using (var ms = new MemoryStream())
             {
@@ -104,8 +104,7 @@ namespace Eventhub.Controllers
                 document.Add(new Paragraph($"Purchase Date: {ticket.PurchaseDate:dd-MM-yyyy}"));
 
                 // Add venue details to the PDF
-                document.Add(new Paragraph($"Venue: {venue.Name}"));
-                document.Add(new Paragraph($"Location: {venue.Location}"));
+                document.Add(new Paragraph($"Venue: {venue}"));
 
                 // Add event details to the PDF
                 document.Add(new Paragraph($"Event: {@event.Title}"));
@@ -127,7 +126,7 @@ namespace Eventhub.Controllers
 
         // Endpoint to generate a PDF for a ticket
         [HttpPost("generate")]
-        [Authorize(Roles = "User,Admin")]
+        //[Authorize(Roles = "User,Admin")]
         public async Task<IActionResult> GeneratePdf([FromBody] TicketRequest request)
         {
             // Fetch the ticket from the database, including related Booking, User, Event, and Venue entities
@@ -149,20 +148,19 @@ namespace Eventhub.Controllers
                 return BadRequest("Booking not found."); // Return an error if the booking is not found
             }
 
-            var venue = await _context.Venues
-                .FirstOrDefaultAsync(v => v.VenueId == booking.VenueId);
-
-            if (venue == null)
-            {
-                return BadRequest("Venue not found."); // Return an error if the venue is not found
-            }
-
             var @event = await _context.Events
                 .FirstOrDefaultAsync(e => e.EventId == booking.EventId);
 
             if (@event == null)
             {
                 return BadRequest("Event not found."); // Return an error if the event is not found
+            }
+
+            var venue = Convert.ToString(@event.VenueName);
+
+            if (venue == null)
+            {
+                return BadRequest("Venue not found."); // Return an error if the venue is not found
             }
 
             // Generate the PDF for the ticket

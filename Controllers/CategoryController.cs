@@ -70,7 +70,7 @@ namespace Eventhub.Controllers
                     IsActive = e.IsActive,
                     CategoryId = e.CategoryId,
                     CategoryName = _context.Categories.Where(c => c.CategoryId == e.CategoryId).Select(c => c.Name).FirstOrDefault(),
-                    VenueId=e.VenueId,
+                    VenueName=e.VenueName,
                     Duration=e.Duration,
                     StartTime=e.StartTime,
                     EndTime=e.EndTime
@@ -86,7 +86,7 @@ namespace Eventhub.Controllers
 
         // POST: api/Category
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<ActionResult<Category>> CreateCategory(CategoryCreateUpdateDto categoryDto)
         {
             if (string.IsNullOrEmpty(categoryDto.Name))
@@ -108,7 +108,7 @@ namespace Eventhub.Controllers
 
         // PUT: api/Category/5
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateCategory(int id, CategoryCreateUpdateDto categoryDto)
         {
             if (string.IsNullOrEmpty(categoryDto.Name))
@@ -133,7 +133,7 @@ namespace Eventhub.Controllers
 
         // DELETE: api/Category/5
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
             var category = await _context.Categories.FindAsync(id);

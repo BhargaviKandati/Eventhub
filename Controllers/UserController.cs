@@ -21,7 +21,6 @@ namespace Eventhub.Controllers
 
         // GET: api/User
         [HttpGet]
-        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             return await _context.Users.ToListAsync();
@@ -29,7 +28,7 @@ namespace Eventhub.Controllers
 
         // GET: api/User/5
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin, User")]
+        //[Authorize(Roles = "Admin, User")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
             var user = await _context.Users.FindAsync(id);
@@ -44,7 +43,7 @@ namespace Eventhub.Controllers
 
         // PUT: api/User/5
         [HttpPut("{id}")]
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         public async Task<IActionResult> PutUser(int id, User user)
         {
             if (id != user.UserId)

@@ -27,12 +27,11 @@ namespace Eventhub.Controllers
         {
             var bookings = await (from b in _context.Bookings
                                   join e in _context.Events on b.EventId equals e.EventId
-                                  join v in _context.Venues on b.VenueId equals v.VenueId
                                   select new BookingDto
                                   {
                                       BookingId = b.BookingId,
                                       EventTitle = e.Title,
-                                      VenueName = v.Name,
+                                      VenueName = e.VenueName,
                                       BookingDate = b.BookingDate,
                                       NoOfTickets=b.NoOfTickets
                                   }).ToListAsync();
@@ -46,14 +45,16 @@ namespace Eventhub.Controllers
         {
             var booking = await (from b in _context.Bookings
                                  join e in _context.Events on b.EventId equals e.EventId
-                                 join v in _context.Venues on b.VenueId equals v.VenueId
                                  where b.BookingId == id
                                  select new BookingDto
                                  {
                                      BookingId = b.BookingId,
                                      EventTitle = e.Title,
-                                     VenueName = v.Name,
-                                     BookingDate = b.BookingDate
+                                     VenueName = e.VenueName,
+                                     BookingDate = b.BookingDate,
+                                     UserId = b.UserId,
+                                     NoOfTickets = b.NoOfTickets
+                                     
                                  }).FirstOrDefaultAsync();
 
             if (booking == null)
@@ -78,8 +79,7 @@ namespace Eventhub.Controllers
                     IsActive = e.IsActive,
                     CategoryId = e.CategoryId,
                     CategoryName = _context.Categories.Where(c => c.CategoryId == e.CategoryId).Select(c => c.Name).FirstOrDefault(),
-                    VenueId = e.VenueId,
-                    VenueName = _context.Venues.Where(v => v.VenueId == e.VenueId).Select(v => v.Name).FirstOrDefault(),
+                    VenueName = e.VenueName,
                     StartTime = e.StartTime,
                     EndTime = e.EndTime,
                     Duration = e.EndTime - e.StartTime
@@ -95,28 +95,27 @@ namespace Eventhub.Controllers
 
         // POST: api/Booking
         [HttpPost]
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         public async Task<ActionResult<Booking>> CreateBooking(BookingCreateUpdateDto bookingDto)
         {
-            if (bookingDto.EventId <= 0 || bookingDto.VenueId <= 0)
+            if (bookingDto.EventId <= 0)
             {
-                return BadRequest("Please provide valid EventId and VenueId.");
+                return BadRequest("Please provide valid EventId.");
             }
 
             var Event = await _context.Events.FindAsync(bookingDto.EventId);
-            var Venue = await _context.Venues.FindAsync(bookingDto.VenueId);
             var NoOfTickets = await _context.Bookings.FindAsync(bookingDto.NoOfTickets);
-            if (Event == null || Venue == null )
+            if (Event == null)
             {
-                return BadRequest("Event or Venue not found.");
+                return BadRequest("Event not found.");
             }
 
             var booking = new Booking
             {
                 EventId = bookingDto.EventId,
-                VenueId = bookingDto.VenueId,
                 NoOfTickets=bookingDto.NoOfTickets,
-                BookingDate = bookingDto.BookingDate
+                BookingDate = bookingDto.BookingDate,
+                UserId = bookingDto.UserId
             };
 
             _context.Bookings.Add(booking);
@@ -127,7 +126,7 @@ namespace Eventhub.Controllers
 
         // PUT: api/Booking/5
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateBooking(int id, BookingCreateUpdateDto bookingDto)
         {
             if (id != bookingDto.BookingId)
@@ -142,7 +141,6 @@ namespace Eventhub.Controllers
             }
 
             booking.EventId = bookingDto.EventId;
-            booking.VenueId = bookingDto.VenueId;
             booking.BookingDate = bookingDto.BookingDate;
 
             _context.Entry(booking).State = EntityState.Modified;
@@ -153,7 +151,7 @@ namespace Eventhub.Controllers
 
         // DELETE: api/Booking/5
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteBooking(int id)
         {
             var booking = await _context.Bookings.FindAsync(id);

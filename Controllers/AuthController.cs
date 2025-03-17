@@ -8,6 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Eventhub.DTOs;
+using Eventhub.DTO;
 
 namespace Eventhub.Controllers
 {
@@ -53,10 +54,10 @@ namespace Eventhub.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(string username, string password)
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             // Find the user by username
-            var user = await _context.Users.SingleOrDefaultAsync(u => u.UserName == username);
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.UserName == request.username);
 
             if (user == null)
             {
@@ -77,7 +78,10 @@ namespace Eventhub.Controllers
                 new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
-                new Claim(ClaimTypes.Role, user.Role)
+                new Claim(ClaimTypes.Role, user.Role),
+                new Claim("id", user.UserId.ToString()),
+                new Claim("username", user.UserName),
+                new Claim("role", user.Role),
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["jwtSettings:key"]));

@@ -24,7 +24,7 @@ namespace Eventhub.Controllers
 
         // POST: api/Payment
         [HttpPost]
-        [Authorize(Roles = "User,Admin")]
+        //[Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<Payment>> PostPayment(PaymentDto paymentDto)
         {
             // Check if the TicketId exists in the Ticket table
@@ -74,7 +74,7 @@ namespace Eventhub.Controllers
 
         // GET: api/Payment
         [HttpGet]
-        [Authorize(Roles = "User,Admin")]
+        //[Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<IEnumerable<Payment>>> GetPayments()
         {
             try
@@ -91,7 +91,7 @@ namespace Eventhub.Controllers
 
         // GET: api/Payment/5
         [HttpGet("{id}")]
-        [Authorize(Roles = "User,Admin")]
+        //[Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<Payment>> GetPayment(int id)
         {
             try
@@ -113,7 +113,7 @@ namespace Eventhub.Controllers
 
         // DELETE: api/Payment/5
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeletePayment(int id)
         {
             try

@@ -9,9 +9,10 @@
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
 
-        public int VenueId { get; set; }
         public TimeSpan Duration { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
+        public string VenueName { get; set; }
+
     }
 }
