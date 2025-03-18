@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { UsernavComponent } from "../usernav/usernav.component";
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -24,12 +24,13 @@ export class PaymentComponent {
   noOfTickets: number = 0;
   paymentMethods = ['UPI', 'Credit Card', 'Debit Card'];
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {}
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const eventId = Number(params['eventId']);
       const bookingId = Number(params['bookingId']);
+      this.paymentDto.ticketId = Number(params['ticketId']);
       this.getEventDetails(eventId);
       this.getNoOfTickets(bookingId);
     });
@@ -74,6 +75,7 @@ export class PaymentComponent {
       .subscribe(response => {
         console.log('Payment successful', response);
         alert('Payment successful!');
+        this.router.navigate(['/app-events']);
       }, error => {
         console.error('Error creating payment', error);
         alert('Error creating payment: ' + error.message);
