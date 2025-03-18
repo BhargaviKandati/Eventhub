@@ -1,0 +1,25 @@
+<app-usernav></app-usernav>
+<body>
+    <div class="illustration">
+    <img src="https://tse1.mm.bing.net/th/id/OIP.oiGZChbKgg-vXPPbsrd5QQHaFN?rs=1&pid=ImgDetMain" alt="Smartphone Illustration"> 
+    </div>
+    <!-- Login Form -->
+    <div class="login-container">
+        <h2>USER LOGIN</h2>
+        <form (ngSubmit)="onLogin()">
+            <div class="input-group">
+                <i class="fa fa-user"></i>
+                <label>Username</label>
+                <input type="text" id="username" [(ngModel)]="username" name="username" required placeholder="Enter UserName">
+            </div>
+            <div class="input-group">
+                <i class="fa fa-lock"></i>
+                <label for="password">Password</label>
+                <input type="password" id="password" [(ngModel)]="password" name="password" required placeholder="password">
+            </div>
+            <button type="submit" class="login-button">LOGIN</button>
+            <p class="register-message">Don't have an account?</p>
+            <button type="button" class="register-button" onclick="window.location.href='/app-registration'">REGISTER</button>
+        </form>
+    </div>
+</body>

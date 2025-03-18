@@ -1,0 +1,78 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-profile span {
+    color: #fff;
+}
+
+.login-button,
+.signup-button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.login-button:hover,
+.signup-button:hover {
+    background-color: #ddd;
+}
+
+.main-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 50px;
+}
+
+.illustration  {
+    max-width: 100%;
+    height: auto;
+}
+
+.about-us {
+    max-width: 600px;
+}
+
+.about-us h2 {
+    color: #333;
+}
+
+.about-us p {
+    color: #666;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.event-button,
+.account-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.event-button:hover,
+.account-button:hover {
+    background-color: #555;
+}

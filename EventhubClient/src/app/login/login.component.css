@@ -1,0 +1,83 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #fff;
+}
+.illustration {
+    position: absolute;
+    top: 45%;
+    left: 0;
+    transform: translateY(-50%);
+    max-width: 25%; /* Adjust this value to make the image smaller */
+    height: auto;
+}
+
+.login-container {
+    background-color: #004d66;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 300px;
+    margin: 50px auto;
+}
+
+.login-container h2 {
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    color: white;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: calc(100% - 40px);
+    padding: 10px 10px 10px 40px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+}
+
+.input-group i {
+    position: absolute;
+    left: 10px;
+    top: 70%;
+    transform: translateY(-50%);
+    color: #999;
+}
+
+.login-button,
+.register-button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #8a8484;
+    color: white;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.login-button:hover,
+.register-button:hover {
+    background-color: #555;
+}
+
+.register-message {
+    color: white;
+    text-align: center;
+    margin-top: 10px;
+}
+

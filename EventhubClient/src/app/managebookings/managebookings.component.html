@@ -1,0 +1,24 @@
+ <app-nav></app-nav>
+<div class="booking-data" *ngIf="bookings.length > 0">
+  <h1>BOOKING DETAILS</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Booking ID</th>
+        <th>Event Title</th>
+        <th>Venue Name</th>
+        <th>Booking Date</th>
+        <th>No. of Tickets</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let booking of bookings">
+        <td>{{ booking.bookingId }}</td>
+        <td>{{ booking.eventTitle }}</td>
+        <td>{{ booking.venueName }}</td>
+        <td>{{ booking.bookingDate | date: 'short' }}</td>
+        <td>{{ booking.noOfTickets }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,56 @@
+<app-nav></app-nav>
+<div class="user-data" *ngIf="users.length > 0">
+  <h1>USER DETAILS</h1>
+  <input type="text" placeholder="Search by username" [(ngModel)]="searchTerm" (input)="filterUsers()" />
+  <table>
+    <thead>
+      <tr>
+        <th>User ID</th>
+        <th>Full Name</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th>Role</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of filteredUsers">
+        <td>{{ user.userId }}</td>
+        <td>{{ user.fullName }}</td>
+        <td>{{ user.userName }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.phoneNumber }}</td>
+        <td>{{ user.role }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div> 
+ 
+ 
+ 
+ <!-- <app-nav></app-nav>
+<div class="user-data" *ngIf="users.length > 0">
+  <h1>USER DETAILS</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>User ID</th>
+        <th>Full Name</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th>Role</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.userId }}</td>
+        <td>{{ user.fullName }}</td>
+        <td>{{ user.userName }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.phoneNumber }}</td>
+        <td>{{ user.role }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div> -->

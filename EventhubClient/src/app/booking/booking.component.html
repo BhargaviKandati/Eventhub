@@ -1,0 +1,20 @@
+<app-usernav></app-usernav>
+<div class="booking-container">
+    <form (ngSubmit)="createBooking()">
+        <h2>Book Your Tickets</h2>
+        <div class="form-group">
+            <label for="eventId">Event ID:</label>
+            <input type="number" id="eventId" [(ngModel)]="bookingDto.eventId" name="eventId" required>
+        </div>
+        <div class="form-group">
+            <label for="noOfTickets">Number of Tickets:</label>
+            <input type="number" id="noOfTickets" [(ngModel)]="bookingDto.noOfTickets" name="noOfTickets" required min="1" max="100">
+            <p *ngIf="bookingDto.noOfTickets > 100" class="error-message">Only 100 tickets is the maximum limit.</p>
+        </div>
+        <div class="form-group">
+            <label for="bookingDate">Booking Date:</label>
+            <input type="date" id="bookingDate" [(ngModel)]="bookingDto.bookingDate" name="bookingDate" required>
+        </div>
+         <button type="submit" class="book-now">Book Now</button>
+    </form>
+</div>

@@ -1,0 +1,30 @@
+<app-nav></app-nav>
+<div class="manage-categories-container">
+  <!-- Error/Success Messages -->
+  <p *ngIf="isLoading">Loading categories...</p>
+  <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+  <p *ngIf="successMessage" class="success-message">{{ successMessage }}</p>
+  <!-- Add Category Form -->
+  <form (submit)="onSubmitCategoryForm()">
+    <div class="form-group">
+      <h2><label for="categoryName">MANAGE CATEGORY</label></h2>
+      <input type="text" id="categoryName" [(ngModel)]="categoryForm.name"
+        name="name" placeholder="Enter category name"required/>
+    </div>
+    <div class="form-group">
+      <label for="categoryStatus">Active</label>
+      <input type="checkbox" id="categoryStatus"[(ngModel)]="categoryForm.isActive" name="isActive"/>
+    </div>
+    <button type="submit">{{ categoryForm.categoryId ? 'Update' : 'Add' }} Category</button>
+  </form>
+  <!-- Display Categories -->
+  <div *ngIf="categories.length > 0" class="categories-cards">
+    <div *ngFor="let category of categories" class="category-card">
+      <h3>{{ category.name }}</h3>
+      <p>ID: {{ category.categoryId }}</p>
+      <p>Status: {{ category.isActive ? '✅ Active' : '❌ Inactive' }}</p>
+      <button (click)="editCategory(category)">✏️ Edit</button>
+      <button (click)="deleteCategory(category.categoryId)">🗑️ Delete</button>
+    </div>
+  </div>
+</div>

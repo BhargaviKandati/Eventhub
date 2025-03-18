@@ -1,0 +1,14 @@
+<app-usernav></app-usernav>
+<div class="card-container">
+    <div class="card" *ngFor="let event of events">
+        <h2>{{ event.title }}</h2>
+        <p><strong>Event Id : </strong> {{ event.eventId }}</p>
+        <p><strong>Category:</strong> {{ event.categoryName }}</p>
+        <p><strong>Venue:</strong> {{ event.venueName }}</p>
+        <p><strong>Price:</strong> ₹{{ event.price }}</p>
+        <p><strong>Start Time:</strong> {{ event.startTime | date: 'short' }}</p>
+        <p><strong>End Time:</strong> {{ event.endTime | date: 'short' }}</p>
+        <p><strong>Duration:</strong> {{ event.duration }}</p>
+        <button type="button" class="book-now" (click)="navigateToBooking(event.eventId)">Book Now</button>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<app-usernav></app-usernav>
+<div class="container">
+<div class="illustration">
+    <img src="https://th.bing.com/th/id/OIP.Ry9JPhESzGjFAKSBQ2V6hwHaFj?w=288&h=216&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2" alt="Smartphone Illustration">
+</div>
+<div class="payment-container">
+    <h2>Payment for {{ eventDetails.title }}</h2>
+    <p><strong>Event:</strong> {{ eventDetails.title }}</p>
+    <p><strong>Price:</strong> ₹{{ eventDetails.price*this.bookingInfo.noOfTickets }}</p>
+    <form (submit)="createPayment()"> 
+        <!-- <div class="form-group">
+            <label for="ticketId">Ticket ID:</label>
+            <input type="number" id="ticketId" [(ngModel)]="paymentDto.ticketId" name="ticketId" required>
+        </div> -->
+        
+        <div class="form-group">
+            <label for="paymentDate">Payment Date:</label>
+            <input type="date" id="paymentDate" [(ngModel)]="paymentDto.paymentDate" name="paymentDate" required>
+        </div>
+        <div class="form-group">
+            <label for="method">Payment Method:</label>
+            <select id="method" [(ngModel)]="paymentDto.method" name="method" required>
+                <option *ngFor="let method of paymentMethods" [value]="method">{{ method }}</option>
+            </select>
+        </div>
+        <button type="submit" class="pay-now">Pay Now</button>
+    </form>
+</div>
+</div>
